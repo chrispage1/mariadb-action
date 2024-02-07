@@ -19,6 +19,8 @@ steps:
     mysql root password: ${{ secrets.RootPassword }} # Required if "mysql user" is empty, default is empty. The root superuser password
     mysql user: 'developer' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
     mysql password: ${{ secrets.DatabasePassword }} # Required if "mysql user" exists. The password for the "mysql user"
+    name: 'my_mariadb' # Optional, default value is empty. The name of the container
+    skip existing: true # Optional, default value is false. Skip the set-up if a container with the 'name' parameter already exists
 ```
 
 See [Docker Hub](https://hub.docker.com/_/mariadb) for available versions.

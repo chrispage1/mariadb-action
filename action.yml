@@ -1,4 +1,4 @@
-name: 'Start MariaDB'
+\name: 'Start MariaDB'
 description: 'Start a MariaDB database'
 author: 'getong'
 branding:
@@ -41,6 +41,14 @@ inputs:
     description: 'MYSQL_PASSWORD - specified superuser password which user is power for created database'
     required: false
     default: ''
+  name:
+    description: 'Provide a name for the container'
+    required: false,
+    default: ''
+  skip existing:
+    description: 'Skip starting the container if it is already running. This will be determined by the name field'
+    required: false
+    default: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
