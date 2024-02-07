@@ -2,19 +2,6 @@
 
 docker_run="docker run"
 
-if [ -n "$INPUT_NAME" ]; then
-  echo "Using specified container name $INPUT_NAME"
-
-  if [ $INPUT_SKIP_EXISTING ]; then
-      if [ -n "$(docker ps -a -q -f name=$INPUT_NAME)" ]; then
-        echo "Container with name $INPUT_NAME already exists, continuing with existing container"
-        exit 0
-      fi
-    fi
-
-  docker_run="$docker_run --name $INPUT_NAME"
-fi
-
 if [ -n "$INPUT_MYSQL_ROOT_PASSWORD" ]; then
   echo "Root password not empty, use root superuser"
 
@@ -42,5 +29,18 @@ fi
 
 docker_run="$docker_run -d -p $INPUT_HOST_PORT:$INPUT_CONTAINER_PORT mariadb:$INPUT_MARIADB_VERSION --port=$INPUT_CONTAINER_PORT"
 docker_run="$docker_run --character-set-server=$INPUT_CHARACTER_SET_SERVER --collation-server=$INPUT_COLLATION_SERVER"
+
+if [ -n "$INPUT_NAME" ]; then
+  echo "Using specified container name $INPUT_NAME"
+
+  if [ $INPUT_SKIP_EXISTING ]; then
+      if [ -n "$(docker ps -a -q -f name=$INPUT_NAME)" ]; then
+        echo "Container with name $INPUT_NAME already exists, continuing with existing container"
+        exit 0
+      fi
+    fi
+
+  docker_run="$docker_run --name $INPUT_NAME"
+fi
 
 sh -c "$docker_run"
