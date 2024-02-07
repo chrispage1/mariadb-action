@@ -27,9 +27,6 @@ if [ -n "$INPUT_MYSQL_DATABASE" ]; then
   docker_run="$docker_run -e MYSQL_DATABASE=$INPUT_MYSQL_DATABASE"
 fi
 
-docker_run="$docker_run -d -p $INPUT_HOST_PORT:$INPUT_CONTAINER_PORT mariadb:$INPUT_MARIADB_VERSION --port=$INPUT_CONTAINER_PORT"
-docker_run="$docker_run --character-set-server=$INPUT_CHARACTER_SET_SERVER --collation-server=$INPUT_COLLATION_SERVER"
-
 if [ -n "$INPUT_NAME" ]; then
   echo "Using specified container name $INPUT_NAME"
 
@@ -42,5 +39,8 @@ if [ -n "$INPUT_NAME" ]; then
 
   docker_run="$docker_run --name $INPUT_NAME"
 fi
+
+docker_run="$docker_run -d -p $INPUT_HOST_PORT:$INPUT_CONTAINER_PORT mariadb:$INPUT_MARIADB_VERSION --port=$INPUT_CONTAINER_PORT"
+docker_run="$docker_run --character-set-server=$INPUT_CHARACTER_SET_SERVER --collation-server=$INPUT_COLLATION_SERVER"
 
 sh -c "$docker_run"
